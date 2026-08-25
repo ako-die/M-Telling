@@ -15,23 +15,35 @@
     body {
       font-family: Arial, sans-serif;
       min-height: 100vh;
-      background: linear-gradient(180deg, #0d47a1 0%, #1976d2 45%, #eaf4ff 100%);
+      background: #eef7ff;
+      color: #12345a;
+    }
+
+    /* ================= SPLASH ================= */
+
+    #splash {
+      min-height: 100vh;
+      background: linear-gradient(
+        180deg,
+        #0d47a1 0%,
+        #1976d2 45%,
+        #eaf4ff 100%
+      );
+
       display: flex;
       justify-content: center;
       align-items: center;
+      text-align: center;
       color: white;
     }
 
-    .splash {
+    .splash-content {
       width: 100%;
       max-width: 430px;
-      min-height: 100vh;
+      padding: 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 30px;
-      text-align: center;
     }
 
     .created {
@@ -40,7 +52,6 @@
       font-size: 15px;
       font-weight: bold;
       letter-spacing: 1px;
-      opacity: 0.95;
     }
 
     .logo {
@@ -82,30 +93,21 @@
       top: 26px;
     }
 
-    .dot.one {
-      left: 20px;
-    }
+    .dot.one { left: 20px; }
+    .dot.two { left: 37px; }
+    .dot.three { left: 54px; }
 
-    .dot.two {
-      left: 37px;
-    }
-
-    .dot.three {
-      left: 54px;
-    }
-
-    .title {
+    .splash-title {
       font-size: 42px;
       font-weight: 800;
       letter-spacing: 3px;
       margin-bottom: 10px;
     }
 
-    .subtitle {
+    .splash-subtitle {
       font-size: 16px;
       line-height: 1.5;
       max-width: 300px;
-      opacity: 0.95;
     }
 
     .loading {
@@ -124,46 +126,240 @@
       }
     }
 
-    .version {
-      position: absolute;
-      bottom: 25px;
+    /* ================= HOME ================= */
+
+    #home {
+      display: none;
+      min-height: 100vh;
+      background: linear-gradient(
+        180deg,
+        #0d47a1 0%,
+        #1976d2 22%,
+        #eef7ff 55%,
+        #ffffff 100%
+      );
+    }
+
+    .home-container {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      margin: auto;
+      padding: 25px 20px 35px;
+    }
+
+    .home-created {
+      text-align: center;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 25px;
+    }
+
+    .home-header {
+      background: rgba(255,255,255,0.96);
+      border-radius: 25px;
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      margin-bottom: 25px;
+    }
+
+    .home-title {
+      color: #0d47a1;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .home-subtitle {
+      color: #55708d;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      box-shadow: 0 7px 20px rgba(13,71,161,0.12);
+      border: 1px solid #e1effc;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .menu-card:active {
+      transform: scale(0.98);
+    }
+
+    .menu-icon {
+      width: 58px;
+      height: 58px;
+      min-width: 58px;
+      border-radius: 17px;
+      background: #e5f2ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .menu-text h3 {
+      color: #0d47a1;
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .menu-text p {
+      color: #71859a;
       font-size: 12px;
-      opacity: 0.75;
+    }
+
+    .home-footer {
+      text-align: center;
+      color: #6f8aa5;
+      font-size: 11px;
+      margin-top: 30px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="splash">
+  <!-- ================= SPLASH SCREEN ================= -->
+
+  <section id="splash">
 
     <div class="created">
       Created by Dee
     </div>
 
-    <div class="logo">
-      <div class="chat-icon">
-        <span class="dot one"></span>
-        <span class="dot two"></span>
-        <span class="dot three"></span>
+    <div class="splash-content">
+
+      <div class="logo">
+        <div class="chat-icon">
+          <span class="dot one"></span>
+          <span class="dot two"></span>
+          <span class="dot three"></span>
+        </div>
       </div>
+
+      <div class="splash-title">
+        M-TELLING
+      </div>
+
+      <div class="splash-subtitle">
+        Smart Chat Offering &amp; Follow Up
+      </div>
+
+      <div class="loading"></div>
+
     </div>
 
-    <div class="title">
-      M-TELLING
+  </section>
+
+
+  <!-- ================= HOME ================= -->
+
+  <section id="home">
+
+    <div class="home-container">
+
+      <div class="home-created">
+        Created by Dee
+      </div>
+
+      <div class="home-header">
+
+        <div class="home-title">
+          M-TELLING
+        </div>
+
+        <div class="home-subtitle">
+          Smart Chat Offering &amp; Follow Up
+        </div>
+
+      </div>
+
+
+      <div class="menu">
+
+        <div class="menu-card">
+          <div class="menu-icon">💬</div>
+
+          <div class="menu-text">
+            <h3>Chat Penawaran</h3>
+            <p>Buat dan kirim penawaran kepada customer</p>
+          </div>
+        </div>
+
+
+        <div class="menu-card">
+          <div class="menu-icon">📤</div>
+
+          <div class="menu-text">
+            <h3>Status Chat</h3>
+            <p>Lihat status chat terkirim atau gagal</p>
+          </div>
+        </div>
+
+
+        <div class="menu-card">
+          <div class="menu-icon">📊</div>
+
+          <div class="menu-text">
+            <h3>Report Chat</h3>
+            <p>Lihat respons dan hasil penawaran</p>
+          </div>
+        </div>
+
+
+        <div class="menu-card">
+          <div class="menu-icon">🔄</div>
+
+          <div class="menu-text">
+            <h3>Follow Up Chat</h3>
+            <p>Pantau proses customer sampai selesai</p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="home-footer">
+        M-Telling • Smart Customer Engagement
+      </div>
+
     </div>
 
-    <div class="subtitle">
-      Smart Chat Offering &amp; Follow Up
-    </div>
+  </section>
 
-    <div class="loading"></div>
 
-    <div class="version">
-      Smart Customer Engagement
-    </div>
+  <!-- ================= PERPINDAHAN SPLASH KE HOME ================= -->
 
-  </div>
+  <script>
+
+    setTimeout(function() {
+
+      document.getElementById("splash").style.display = "none";
+      document.getElementById("home").style.display = "block";
+
+    }, 3000);
+
+  </script>
 
 </body>
 </html>
+      
+      
+      
