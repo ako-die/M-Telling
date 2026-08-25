@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Follow Up Chat - m-Telling</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #eaf4ff, #f8fbff);
+      color: #12345a;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .header {
+      background: white;
+      border-radius: 28px;
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      background: #e5f2ff;
+      color: #15579c;
+      padding: 13px 22px;
+      border-radius: 18px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-bottom: 25px;
+    }
+
+    .header h1 {
+      color: #15579c;
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #71849a;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .followup-card {
+      background: white;
+      border-radius: 25px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+    }
+
+    .customer-name {
+      font-size: 22px;
+      font-weight: bold;
+      color: #15579c;
+      margin-bottom: 15px;
+    }
+
+    .info {
+      background: #f2f8fd;
+      border-radius: 16px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    .info-row {
+      margin-bottom: 12px;
+    }
+
+    .info-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #55708c;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .value {
+      color: #12345a;
+      font-size: 16px;
+    }
+
+    .draft {
+      background: #eaf5ff;
+      border-radius: 15px;
+      padding: 15px;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .status {
+      padding: 12px;
+      border-radius: 15px;
+      text-align: center;
+      font-weight: bold;
+      margin-top: 15px;
+      background: #fff4d8;
+      color: #9a6b00;
+    }
+
+    .status.selesai {
+      background: #e2f7e9;
+      color: #18864b;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .action-btn {
+      flex: 1;
+      border: none;
+      border-radius: 15px;
+      padding: 13px 10px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .follow-btn {
+      background: #15579c;
+      color: white;
+    }
+
+    .done-btn {
+      background: #dff4e6;
+      color: #18864b;
+    }
+
+    .empty {
+      background: white;
+      border-radius: 25px;
+      padding: 40px 20px;
+      text-align: center;
+      color: #71849a;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+    }
+
+    .empty-icon {
+      font-size: 50px;
+      margin-bottom: 15px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #71849a;
+      margin-top: 25px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+
+      <a href="index.html" class="back-btn">
+        ← Kembali
+      </a>
+
+      <h1>Follow Up Chat</h1>
+
+      <p>
+        Pantau proses customer sampai selesai
+      </p>
+
+    </div>
+
+    <div id="followUpList"></div>
+
+    <div class="footer">
+      m-Telling • Smart Customer Engagement
+    </div>
+
+  </div>
+
+
+  <script>
+
+    function tampilkanFollowUp() {
+
+      const container =
+        document.getElementById("followUpList");
+
+      const data =
+        localStorage.getItem("mTellingChatPenawaran");
+
+      if (!data) {
+
+        container.innerHTML = `
+          <div class="empty">
+
+            <div class="empty-icon">📋</div>
+
+            <h3>Belum ada data Follow Up</h3>
+
+            <p style="margin-top:10px;">
+              Data customer dari Chat Penawaran
+              akan tampil di sini.
+            </p>
+
+          </div>
+        `;
+
+        return;
+      }
+
+
+      let chat;
+
+      try {
+
+        chat = JSON.parse(data);
+
+      } catch (error) {
+
+        container.innerHTML = `
+          <div class="empty">
+
+            <div class="empty-icon">⚠️</div>
+
+            <h3>Data tidak dapat dibaca</h3>
+
+            <p style="margin-top:10px;">
+              Silakan periksa kembali data Chat Penawaran.
+            </p>
+
+          </div>
+        `;
+
+        return;
+      }
+
+
+      container.innerHTML = `
+
+        <div class="followup-card">
+
+          <div class="customer-name">
+            ${chat.nama || "-"}
+          </div>
+
+
+          <div class="info">
+
+            <div class="info-row">
+
+              <div class="label">
+                Tanggal Kirim
+              </div>
+
+              <div class="value">
+                ${chat.tanggal || "-"}
+              </div>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <div class="label">
+                No. HP
+              </div>
+
+              <div class="value">
+                ${chat.noHP || "-"}
+              </div>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <div class="label">
+                Jenis Produk
+              </div>
+
+              <div class="value">
+                ${chat.produk || "-"}
+              </div>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <div class="label">
+                Draft Chat
+              </div>
+
+              <div class="draft">
+                ${chat.draft || "-"}
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="statusFollowUp"
+            class="status"
+          >
+            ⏳ Menunggu Follow Up
+          </div>
+
+
+          <div class="action-row">
+
+            <button
+              class="action-btn follow-btn"
+              onclick="followUpSekarang()"
+            >
+              📱 Follow Up
+            </button>
+
+            <button
+              class="action-btn done-btn"
+              onclick="selesaikanFollowUp()"
+            >
+              ✓ Selesai
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+      tampilkanStatus();
+
+    }
+
+
+    function followUpSekarang() {
+
+      const data =
+        localStorage.getItem("mTellingChatPenawaran");
+
+      if (!data) {
+
+        alert("Belum ada data customer.");
+
+        return;
+      }
+
+      let chat = JSON.parse(data);
+
+      const nomor =
+        chat.noHP || "";
+
+      if (!nomor) {
+
+        alert("Nomor HP customer belum tersedia.");
+
+        return;
+      }
+
+
+      const nomorBersih =
+        nomor.replace(/\D/g, "");
+
+
+      const nomorWA =
+        nomorBersih.startsWith("0")
+          ? "62" + nomorBersih.substring(1)
+          : nomorBersih;
+
+
+      window.open(
+        "https://wa.me/" + nomorWA,
+        "_blank"
+      );
+
+    }
+
+
+    function selesaikanFollowUp() {
+
+      localStorage.setItem(
+        "mTellingFollowUpStatus",
+        "Selesai"
+      );
+
+      tampilkanStatus();
+
+    }
+
+
+    function tampilkanStatus() {
+
+      const status =
+        document.getElementById("statusFollowUp");
+
+      if (!status) return;
+
+
+      const data =
+        localStorage.getItem(
+          "mTellingFollowUpStatus"
+        );
+
+
+      if (data === "Selesai") {
+
+        status.className =
+          "status selesai";
+
+        status.innerHTML =
+          "🟢 Follow Up Selesai";
+
+      } else {
+
+        status.className =
+          "status";
+
+        status.innerHTML =
+          "⏳ Menunggu Follow Up";
+
+      }
+
+    }
+
+
+    tampilkanFollowUp();
+
+  </script>
+
+</body>
+</html>
