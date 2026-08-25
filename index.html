@@ -561,6 +561,53 @@
   };
 
 </script>
+  <script>
+  // ================= SAVE CHAT PENAWARAN =================
+
+  const chatPage = document.getElementById("chatPenawaranPage");
+
+  const tanggalKirim = chatPage.querySelector('input[type="date"]');
+  const namaCustomer = chatPage.querySelectorAll('input[type="text"]')[0];
+  const noHP = chatPage.querySelectorAll('input[type="tel"]')[0];
+  const jenisProduk = chatPage.querySelector("select");
+  const draftChat = chatPage.querySelector("textarea");
+
+  const tombolSave = chatPage.querySelectorAll("button")[1];
+
+  tombolSave.onclick = function () {
+
+    if (namaCustomer.value.trim() === "") {
+      alert("Nama Customer harus diisi.");
+      return;
+    }
+
+    if (noHP.value.trim() === "") {
+      alert("No. HP harus diisi.");
+      return;
+    }
+
+    if (jenisProduk.value === "Pilih Produk") {
+      alert("Silakan pilih jenis produk.");
+      return;
+    }
+
+    const dataChat = {
+      tanggal: tanggalKirim.value,
+      nama: namaCustomer.value,
+      noHP: noHP.value,
+      produk: jenisProduk.value,
+      draft: draftChat.value,
+      status: "Draft"
+    };
+
+    localStorage.setItem(
+      "mTellingChatPenawaran",
+      JSON.stringify(dataChat)
+    );
+
+    alert("✅ Data Chat Penawaran berhasil disimpan.");
+  };
+</script>
 </body>
 </html>
       
