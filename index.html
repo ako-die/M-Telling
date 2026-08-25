@@ -894,13 +894,50 @@ if (nomor.startsWith("0")) {
           gap:10px;
         ">
 
-          <div style="
-            color:${warnaStatus};
-            font-weight:bold;
-            font-size:14px;
-          ">
-            ${iconStatus} ${chat.status}
-          </div>
+          <div>
+
+  <div style="
+    color:${warnaStatus};
+    font-weight:bold;
+    font-size:14px;
+    margin-bottom:12px;
+  ">
+    ${iconStatus} ${chat.status}
+  </div>
+
+  ${
+    chat.status === "Chat Gagal"
+    ? `
+      <button onclick="kirimUlangChat()" style="
+        width:100%;
+        border:none;
+        background:#1976d2;
+        color:white;
+        padding:12px;
+        border-radius:12px;
+        font-weight:bold;
+        font-size:14px;
+      ">
+        🔄 KIRIM ULANG
+      </button>
+    `
+    : `
+      <button onclick="tandaiChatGagal()" style="
+        width:100%;
+        border:none;
+        background:#ffebee;
+        color:#c62828;
+        padding:10px;
+        border-radius:12px;
+        font-weight:bold;
+        font-size:13px;
+      ">
+        ⚠️ Tandai Chat Gagal
+      </button>
+    `
+  }
+
+</div>
 
         </div>
 
@@ -909,7 +946,30 @@ if (nomor.startsWith("0")) {
     `;
 
   }
+// ================= TANDAI CHAT GAGAL =================
 
+function tandaiChatGagal() {
+
+  const data = localStorage.getItem("mTellingChatPenawaran");
+
+  if (!data) {
+    alert("Tidak ada data chat.");
+    return;
+  }
+
+  const chat = JSON.parse(data);
+
+  chat.status = "Chat Gagal";
+
+  localStorage.setItem(
+    "mTellingChatPenawaran",
+    JSON.stringify(chat)
+  );
+
+  alert("🔴 Status chat diubah menjadi Chat Gagal.");
+
+  tampilkanStatusChat();
+}
 </script>
 </body>
 </html>
