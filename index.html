@@ -314,7 +314,167 @@
         </div>
 
 
-        <div class="menu-card">
+        <div class="menu-card"
+          onclick="bukaReportChat()">// ================= REPORT CHAT =================
+
+function bukaReportChat() {
+
+  const data = localStorage.getItem("mTellingChatPenawaran");
+
+  if (!data) {
+    alert("Belum ada data chat.");
+    return;
+  }
+
+  const chat = JSON.parse(data);
+
+  document.getElementById("home").style.display = "none";
+
+  let reportPage = document.getElementById("reportChatPage");
+
+  if (!reportPage) {
+
+    reportPage = document.createElement("div");
+    reportPage.id = "reportChatPage";
+
+    reportPage.style.cssText = `
+      min-height:100vh;
+      padding:30px;
+      background:#eef7ff;
+      color:#12345a;
+      box-sizing:border-box;
+    `;
+
+    reportPage.innerHTML = `
+      <div style="
+        max-width:600px;
+        margin:auto;
+        background:white;
+        padding:30px;
+        border-radius:28px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+      ">
+
+        <button onclick="kembaliDariReport()" style="
+          border:none;
+          background:#e8f4ff;
+          color:#1455a0;
+          padding:12px 20px;
+          border-radius:14px;
+          font-weight:bold;
+          font-size:14px;
+        ">
+          ← Kembali
+        </button>
+
+        <h1 style="
+          text-align:center;
+          color:#1455a0;
+          margin-top:35px;
+          margin-bottom:8px;
+        ">
+          Report Chat
+        </h1>
+
+        <p style="
+          text-align:center;
+          color:#71859a;
+          margin-bottom:30px;
+        ">
+          Laporan hasil penawaran customer
+        </p>
+
+        <div style="
+          background:#f8fbff;
+          border:1px solid #dcebf7;
+          border-radius:18px;
+          padding:20px;
+        ">
+
+          <div style="margin-bottom:16px;">
+            <b>Tanggal Kirim</b>
+            <div style="margin-top:6px;">
+              ${chat.tanggal || "-"}
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <b>Nama Customer</b>
+            <div style="margin-top:6px;">
+              ${chat.nama || "-"}
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <b>No. HP</b>
+            <div style="margin-top:6px;">
+              ${chat.noHP || "-"}
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <b>Jenis Produk</b>
+            <div style="margin-top:6px;">
+              ${chat.produk || "-"}
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <b>Draft Chat</b>
+            <div style="
+              margin-top:8px;
+              background:#eef6fc;
+              padding:14px;
+              border-radius:12px;
+            ">
+              ${chat.draft || "-"}
+            </div>
+          </div>
+
+          <div style="
+            margin-top:20px;
+            font-weight:bold;
+            color:${
+              chat.status === "Chat Gagal"
+              ? "#c62828"
+              : "#18864b"
+            };
+          ">
+            ${
+              chat.status === "Chat Gagal"
+              ? "🔴"
+              : "🟢"
+            }
+            ${chat.status || "Belum ada status"}
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+    document.body.appendChild(reportPage);
+
+  } else {
+
+    reportPage.style.display = "block";
+  }
+}
+
+
+// ================= KEMBALI DARI REPORT =================
+
+function kembaliDariReport() {
+
+  const reportPage =
+    document.getElementById("reportChatPage");
+
+  if (reportPage) {
+    reportPage.style.display = "none";
+  }
+
+  document.getElementById("home").style.display = "block";
+}
           <div class="menu-icon">📊</div>
 
           <div class="menu-text">
@@ -1008,6 +1168,166 @@ function kirimUlangChat() {
   window.open(whatsappURL, "_blank");
 
   tampilkanStatusChat();
+}
+  // ================= REPORT CHAT =================
+
+function bukaReportChat() {
+
+  const data = localStorage.getItem("mTellingChatPenawaran");
+
+  if (!data) {
+    alert("Belum ada data chat.");
+    return;
+  }
+
+  const chat = JSON.parse(data);
+
+  document.getElementById("home").style.display = "none";
+
+  let reportPage = document.getElementById("reportChatPage");
+
+  if (!reportPage) {
+
+    reportPage = document.createElement("div");
+    reportPage.id = "reportChatPage";
+
+    reportPage.style.cssText = `
+      min-height:100vh;
+      padding:30px;
+      background:#eef7ff;
+      color:#12345a;
+      box-sizing:border-box;
+    `;
+
+    reportPage.innerHTML = `
+      <div style="
+        max-width:600px;
+        margin:auto;
+        background:white;
+        padding:30px;
+        border-radius:28px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+      ">
+
+        <button onclick="kembaliDariReport()" style="
+          border:none;
+          background:#e8f4ff;
+          color:#1455a0;
+          padding:12px 20px;
+          border-radius:14px;
+          font-weight:bold;
+          font-size:14px;
+        ">
+          ← Kembali
+        </button>
+
+        <h1 style="
+          text-align:center;
+          color:#1455a0;
+          margin-top:35px;
+          margin-bottom:8px;
+        ">
+          Report Chat
+        </h1>
+
+        <p style="
+          text-align:center;
+          color:#71859a;
+          margin-bottom:30px;
+        ">
+          Laporan hasil penawaran customer
+        </p>
+
+        <div style="
+          background:#f8fbff;
+          border:1px solid #dcebf7;
+          border-radius:18px;
+          padding:20px;
+        ">
+
+          <div style="margin-bottom:16px;">
+            <b>Tanggal Kirim</b>
+            <div style="margin-top:6px;">
+              ${chat.tanggal || "-"}
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <b>Nama Customer</b>
+            <div style="margin-top:6px;">
+              ${chat.nama || "-"}
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <b>No. HP</b>
+            <div style="margin-top:6px;">
+              ${chat.noHP || "-"}
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <b>Jenis Produk</b>
+            <div style="margin-top:6px;">
+              ${chat.produk || "-"}
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <b>Draft Chat</b>
+            <div style="
+              margin-top:8px;
+              background:#eef6fc;
+              padding:14px;
+              border-radius:12px;
+            ">
+              ${chat.draft || "-"}
+            </div>
+          </div>
+
+          <div style="
+            margin-top:20px;
+            font-weight:bold;
+            color:${
+              chat.status === "Chat Gagal"
+              ? "#c62828"
+              : "#18864b"
+            };
+          ">
+            ${
+              chat.status === "Chat Gagal"
+              ? "🔴"
+              : "🟢"
+            }
+            ${chat.status || "Belum ada status"}
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+    document.body.appendChild(reportPage);
+
+  } else {
+
+    reportPage.style.display = "block";
+  }
+}
+
+
+// ================= KEMBALI DARI REPORT =================
+
+function kembaliDariReport() {
+
+  const reportPage =
+    document.getElementById("reportChatPage");
+
+  if (reportPage) {
+    reportPage.style.display = "none";
+  }
+
+  document.getElementById("home").style.display = "block";
 }
 </script>
 </body>
