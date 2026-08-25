@@ -391,10 +391,9 @@
           : nomorBersih;
 
 
-      window.open(
-        "https://wa.me/" + nomorWA,
-        "_blank"
-      );
+      window.location.href =
+  "intent://send?phone=" + nomorWA +
+  "#Intent;scheme=whatsapp;package=com.whatsapp;end";
 
     }
 
