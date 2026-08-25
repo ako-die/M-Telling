@@ -608,6 +608,60 @@
     alert("✅ Data Chat Penawaran berhasil disimpan.");
   };
 </script>
+  <script>
+  // ================= SEND CHAT PENAWARAN =================
+
+  const tombolSend = chatPage.querySelectorAll("button")[2];
+
+  tombolSend.onclick = function () {
+
+    if (namaCustomer.value.trim() === "") {
+      alert("Nama Customer harus diisi.");
+      return;
+    }
+
+    if (noHP.value.trim() === "") {
+      alert("No. HP harus diisi.");
+      return;
+    }
+
+    if (jenisProduk.value === "Pilih Produk") {
+      alert("Silakan pilih jenis produk.");
+      return;
+    }
+
+    if (draftChat.value.trim() === "") {
+      alert("Draft Chat harus diisi.");
+      return;
+    }
+
+    const dataChat = {
+      tanggal: tanggalKirim.value,
+      nama: namaCustomer.value,
+      noHP: noHP.value,
+      produk: jenisProduk.value,
+      draft: draftChat.value,
+      status: "Chat Terkirim"
+    };
+
+    localStorage.setItem(
+      "mTellingChatPenawaran",
+      JSON.stringify(dataChat)
+    );
+
+    const nomor = noHP.value.replace(/\D/g, "");
+
+    const pesan = encodeURIComponent(draftChat.value);
+
+    const whatsappURL =
+      "https://wa.me/" + nomor + "?text=" + pesan;
+
+    alert("📤 Chat siap dikirim melalui WhatsApp.");
+
+    window.open(whatsappURL, "_blank");
+
+  };
+</script>
 </body>
 </html>
       
