@@ -668,6 +668,249 @@ if (nomor.startsWith("0")) {
 
   };
 </script>
+  <!-- ================= STATUS CHAT ================= -->
+
+<div id="statusChatPage" style="
+  display:none;
+  min-height:100vh;
+  background:linear-gradient(180deg,#0d47a1 0%,#1976d2 28%,#eef7ff 70%,#ffffff 100%);
+  padding:20px;
+">
+
+  <div style="max-width:430px;margin:auto;">
+
+    <div style="
+      text-align:center;
+      color:white;
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom:20px;
+    ">
+      Created by Dee
+    </div>
+
+    <div style="
+      background:white;
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.12);
+    ">
+
+      <button id="backFromStatus" style="
+        border:none;
+        background:#e8f3ff;
+        color:#0d47a1;
+        padding:10px 16px;
+        border-radius:12px;
+        font-weight:bold;
+        margin-bottom:18px;
+      ">
+        ← Kembali
+      </button>
+
+      <h2 style="
+        color:#0d47a1;
+        text-align:center;
+        margin-bottom:6px;
+      ">
+        Status Chat
+      </h2>
+
+      <p style="
+        text-align:center;
+        color:#71859a;
+        font-size:13px;
+        margin-bottom:22px;
+      ">
+        Memantau status pengiriman chat
+      </p>
+
+      <div id="statusChatContent"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  // ================= BUKA STATUS CHAT =================
+
+  const menuStatus = document.querySelectorAll(".menu-card")[1];
+
+  menuStatus.onclick = function () {
+
+    document.getElementById("home").style.display = "none";
+
+    document.getElementById("statusChatPage").style.display = "block";
+
+    tampilkanStatusChat();
+
+  };
+
+
+  // ================= KEMBALI KE HOME =================
+
+  document.getElementById("backFromStatus").onclick = function () {
+
+    document.getElementById("statusChatPage").style.display = "none";
+
+    document.getElementById("home").style.display = "block";
+
+  };
+
+
+  // ================= TAMPILKAN DATA CHAT =================
+
+  function tampilkanStatusChat() {
+
+    const content =
+      document.getElementById("statusChatContent");
+
+    const data =
+      localStorage.getItem("mTellingChatPenawaran");
+
+    if (!data) {
+
+      content.innerHTML = `
+        <div style="
+          text-align:center;
+          padding:35px 15px;
+          color:#71859a;
+        ">
+          <div style="font-size:45px;">📭</div>
+
+          <h3 style="
+            color:#0d47a1;
+            margin:15px 0 8px;
+          ">
+            Belum ada chat
+          </h3>
+
+          <p style="font-size:13px;">
+            Data chat yang sudah dikirim
+            akan muncul di sini.
+          </p>
+        </div>
+      `;
+
+      return;
+    }
+
+
+    const chat = JSON.parse(data);
+
+    let warnaStatus = "#198754";
+    let iconStatus = "🟢";
+
+    if (chat.status === "Chat Gagal") {
+
+      warnaStatus = "#c62828";
+      iconStatus = "🔴";
+
+    }
+
+
+    content.innerHTML = `
+
+      <div style="
+        border:1px solid #dcecf9;
+        border-radius:18px;
+        padding:18px;
+        margin-bottom:15px;
+        box-shadow:0 5px 15px rgba(13,71,161,0.08);
+      ">
+
+        <div style="
+          font-size:12px;
+          color:#71859a;
+          margin-bottom:8px;
+        ">
+          Tanggal Kirim
+        </div>
+
+        <div style="
+          font-weight:bold;
+          color:#12345a;
+          margin-bottom:15px;
+        ">
+          ${chat.tanggal || "-"}
+        </div>
+
+
+        <div style="
+          font-size:12px;
+          color:#71859a;
+          margin-bottom:5px;
+        ">
+          Nama Customer
+        </div>
+
+        <div style="
+          font-size:18px;
+          font-weight:bold;
+          color:#0d47a1;
+          margin-bottom:15px;
+        ">
+          ${chat.nama}
+        </div>
+
+
+        <div style="
+          font-size:12px;
+          color:#71859a;
+          margin-bottom:5px;
+        ">
+          Jenis Produk
+        </div>
+
+        <div style="
+          font-weight:bold;
+          color:#12345a;
+          margin-bottom:18px;
+        ">
+          ${chat.produk}
+        </div>
+
+
+        <div style="
+          background:#f3f8fc;
+          border-radius:12px;
+          padding:12px;
+          color:#536b82;
+          font-size:13px;
+          margin-bottom:18px;
+        ">
+          ${chat.draft || "Tidak ada draft chat"}
+        </div>
+
+
+        <div style="
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          gap:10px;
+        ">
+
+          <div style="
+            color:${warnaStatus};
+            font-weight:bold;
+            font-size:14px;
+          ">
+            ${iconStatus} ${chat.status}
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+</script>
 </body>
 </html>
       
