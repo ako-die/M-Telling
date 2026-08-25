@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M-Telling</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #0d47a1 0%, #1976d2 45%, #eaf4ff 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .splash {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .created {
+      position: absolute;
+      top: 28px;
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      opacity: 0.95;
+    }
+
+    .logo {
+      width: 150px;
+      height: 150px;
+      border-radius: 35px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.20);
+    }
+
+    .chat-icon {
+      width: 85px;
+      height: 65px;
+      background: #1976d2;
+      border-radius: 22px;
+      position: relative;
+    }
+
+    .chat-icon::after {
+      content: "";
+      position: absolute;
+      bottom: -13px;
+      left: 18px;
+      border-width: 14px 14px 0 0;
+      border-style: solid;
+      border-color: #1976d2 transparent transparent transparent;
+    }
+
+    .dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-radius: 50%;
+      top: 26px;
+    }
+
+    .dot.one {
+      left: 20px;
+    }
+
+    .dot.two {
+      left: 37px;
+    }
+
+    .dot.three {
+      left: 54px;
+    }
+
+    .title {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      line-height: 1.5;
+      max-width: 300px;
+      opacity: 0.95;
+    }
+
+    .loading {
+      margin-top: 45px;
+      width: 45px;
+      height: 45px;
+      border: 4px solid rgba(255,255,255,0.35);
+      border-top: 4px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .version {
+      position: absolute;
+      bottom: 25px;
+      font-size: 12px;
+      opacity: 0.75;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="splash">
+
+    <div class="created">
+      Created by Dee
+    </div>
+
+    <div class="logo">
+      <div class="chat-icon">
+        <span class="dot one"></span>
+        <span class="dot two"></span>
+        <span class="dot three"></span>
+      </div>
+    </div>
+
+    <div class="title">
+      M-TELLING
+    </div>
+
+    <div class="subtitle">
+      Smart Chat Offering &amp; Follow Up
+    </div>
+
+    <div class="loading"></div>
+
+    <div class="version">
+      Smart Customer Engagement
+    </div>
+
+  </div>
+
+</body>
+</html>
