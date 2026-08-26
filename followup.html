@@ -359,47 +359,55 @@
     }
 
 
-    function followUpSekarang() {
+    
+function followUpSekarang(index) {
 
-      const data =
+    const data =
         localStorage.getItem("mTellingChatPenawaran");
 
-      if (!data) {
+    if (!data) {
 
         alert("Belum ada data customer.");
 
         return;
-      }
+    }
 
-      let chat = JSON.parse(data);
+    let daftarChat = JSON.parse(data);
 
-      const nomor =
-        chat.noHP || "";
+    if (!Array.isArray(daftarChat)) {
+        daftarChat = [daftarChat];
+    }
 
-      if (!nomor) {
+    if (!daftarChat[index]) {
+
+        alert("Data customer tidak ditemukan.");
+
+        return;
+    }
+
+    const chat = daftarChat[index];
+
+    const nomor = chat.noHP || "";
+
+    if (!nomor) {
 
         alert("Nomor HP customer belum tersedia.");
 
         return;
-      }
-
-
-      const nomorBersih =
-        nomor.replace(/\D/g, "");
-
-
-      const nomorWA =
-        nomorBersih.startsWith("0")
-          ? "62" + nomorBersih.substring(1)
-          : nomorBersih;
-
-
-      window.location.href =
-  "intent://send?phone=" + nomorWA +
-  "#Intent;scheme=whatsapp;package=com.whatsapp;end";
-
     }
 
+    const nomorBersih =
+        nomor.replace(/\D/g, "");
+
+    const nomorWA =
+        nomorBersih.startsWith("0")
+        ? "62" + nomorBersih.substring(1)
+        : nomorBersih;
+
+    window.location.href =
+        "intent://send?phone=" + nomorWA +
+        "#Intent;scheme=whatsapp;package=com.whatsapp;end";
+}
 
     function selesaikanFollowUp() {
 
