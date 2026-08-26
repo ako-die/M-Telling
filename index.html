@@ -745,18 +745,34 @@ localStorage.setItem(
     }
 
     const dataChat = {
-      tanggal: tanggalKirim.value,
-      nama: namaCustomer.value,
-      noHP: noHP.value,
-      produk: jenisProduk.value,
-      draft: draftChat.value,
-      status: "Chat Terkirim"
-    };
+    tanggal: tanggalKirim.value,
+    nama: namaCustomer.value,
+    noHP: noHP.value,
+    produk: jenisProduk.value,
+    draft: draftChat.value,
+    status: "Chat Terkirim"
+};
 
-    localStorage.setItem(
-      "mTellingChatPenawaran",
-      JSON.stringify(dataChat)
-    );
+const dataLama = localStorage.getItem("mTellingChatPenawaran");
+
+let daftarChat = [];
+
+if (dataLama) {
+    const dataParsed = JSON.parse(dataLama);
+
+    if (Array.isArray(dataParsed)) {
+        daftarChat = dataParsed;
+    } else {
+        daftarChat = [dataParsed];
+    }
+}
+
+daftarChat.push(dataChat);
+
+localStorage.setItem(
+    "mTellingChatPenawaran",
+    JSON.stringify(daftarChat)
+);
 
     
 let nomor = noHP.value.replace(/\D/g, "");
