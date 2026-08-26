@@ -1094,42 +1094,55 @@ function tandaiChatGagal(index) {
 
   // ================= KIRIM ULANG CHAT =================
 
-function kirimUlangChat() {
+function kirimUlangChat(index) {
 
-  const data = localStorage.getItem("mTellingChatPenawaran");
+    const data = localStorage.getItem("mTellingChatPenawaran");
 
-  if (!data) {
-    alert("Tidak ada data chat untuk dikirim ulang.");
-    return;
-  }
+    if (!data) {
+        alert("Tidak ada data chat untuk dikirim ulang.");
+        return;
+    }
 
-  const chat = JSON.parse(data);
+    let daftarChat = JSON.parse(data);
 
-  let nomor = chat.noHP.replace(/\D/g, "");
+    if (!Array.isArray(daftarChat)) {
+        daftarChat = [daftarChat];
+    }
 
-  if (nomor.startsWith("0")) {
-    nomor = "62" + nomor.substring(1);
-  } else if (!nomor.startsWith("62")) {
-    nomor = "62" + nomor;
-  }
+    if (!daftarChat[index]) {
+        alert("Data chat tidak ditemukan.");
+        return;
+    }
 
-  const pesan = encodeURIComponent(chat.draft);
+    const chat = daftarChat[index];
 
-  const whatsappURL =
-    "https://wa.me/" + nomor + "?text=" + pesan;
+    let nomor = chat.noHP.replace(/\D/g, "");
 
-  chat.status = "Chat Terkirim";
+    if (nomor.startsWith("0")) {
+        nomor = "62" + nomor.substring(1);
+    } else if (!nomor.startsWith("62")) {
+        nomor = "62" + nomor;
+    }
 
-  localStorage.setItem(
-    "mTellingChatPenawaran",
-    JSON.stringify(chat)
-  );
+    const pesan = encodeURIComponent(chat.draft);
 
-  alert("🔄 Chat siap dikirim ulang melalui WhatsApp.");
+    const whatsappURL =
+        "https://wa.me/" + nomor + "?text=" + pesan;
 
-  window.open(whatsappURL, "_blank");
+    chat.status = "Chat Terkirim";
 
-  tampilkanStatusChat();
+    daftarChat[index] = chat;
+
+    localStorage.setItem(
+        "mTellingChatPenawaran",
+        JSON.stringify(daftarChat)
+    );
+
+    alert("📤 Chat siap dikirim ulang melalui WhatsApp.");
+
+    window.open(whatsappURL, "_blank");
+
+    tampilkanStatusChat();
 }
   // ================= REPORT CHAT =================
 
