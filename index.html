@@ -314,107 +314,170 @@
         <script>
 function bukaReportChat() {
 
-  const data = localStorage.getItem("mTellingChatPenawaran");
+    const data = localStorage.getItem("mTellingChatPenawaran");
 
-  if (!data) {
-    alert("Belum ada data chat.");
-    return;
-  }
+    if (!data) {
+        alert("Belum ada data chat.");
+        return;
+    }
 
-  const chat = JSON.parse(data);
+    let daftarChat = JSON.parse(data);
 
-  document.getElementById("home").style.display = "none";
+    if (!Array.isArray(daftarChat)) {
+        daftarChat = [daftarChat];
+    }
 
-  let reportPage = document.getElementById("reportChatPage");
+    document.getElementById("home").style.display = "none";
 
-  if (!reportPage) {
+    let reportPage = document.getElementById("reportChatPage");
 
-    reportPage = document.createElement("div");
-    reportPage.id = "reportChatPage";
+    if (!reportPage) {
 
-    reportPage.style.cssText = `
-      min-height:100vh;
-      padding:30px;
-      background:#eef7ff;
-      color:#12345a;
-      box-sizing:border-box;
+        reportPage = document.createElement("div");
+        reportPage.id = "reportChatPage";
+
+        reportPage.style.cssText = `
+            min-height:100vh;
+            padding:30px;
+            background:#eef7ff;
+            color:#12345a;
+            box-sizing:border-box;
+        `;
+
+        document.body.appendChild(reportPage);
+    }
+
+    let html = `
+        <div style="
+            max-width:600px;
+            margin:auto;
+            background:white;
+            padding:30px;
+            border-radius:28px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.08);
+        ">
+
+            <button onclick="kembaliDariReport()" style="
+                border:none;
+                background:#e8f4ff;
+                color:#1455a0;
+                padding:12px 20px;
+                border-radius:14px;
+                font-weight:bold;
+                font-size:14px;
+            ">
+                ← Kembali
+            </button>
+
+            <h1 style="
+                text-align:center;
+                color:#1455a0;
+                margin-top:35px;
+                margin-bottom:8px;
+            ">
+                Report Chat
+            </h1>
+
+            <p style="
+                text-align:center;
+                color:#71859a;
+                margin-bottom:30px;
+            ">
+                Laporan hasil penawaran customer
+            </p>
     `;
 
-    reportPage.innerHTML = `
-      <div style="
-        max-width:600px;
-        margin:auto;
-        background:white;
-        padding:30px;
-        border-radius:28px;
-        box-shadow:0 10px 30px rgba(0,0,0,0.08);
-      ">
+    daftarChat.forEach((chat, index) => {
 
-        <button onclick="kembaliDariReport()" style="
-          border:none;
-          background:#e8f4ff;
-          color:#1455a0;
-          padding:12px 20px;
-          border-radius:14px;
-          font-weight:bold;
-          font-size:14px;
-        ">
-          ← Kembali
-        </button>
+        let warnaStatus = "#198754";
+        let iconStatus = "🟢";
+        let teksStatus = chat.status || "Belum ada status";
 
-        <h1 style="
-          text-align:center;
-          color:#1455a0;
-          margin-top:35px;
-          margin-bottom:8px;
-        ">
-          Report Chat
-        </h1>
+        if (chat.status === "Chat Gagal") {
+            warnaStatus = "#c62828";
+            iconStatus = "🔴";
+        }
 
-        <p style="
-          text-align:center;
-          color:#71859a;
-          margin-bottom:30px;
-        ">
-          Laporan hasil penawaran customer
-        </p>
+        html += `
+            <div style="
+                background:#f8fbff;
+                border:1px solid #dcebf7;
+                border-radius:18px;
+                padding:20px;
+                margin-bottom:20px;
+            ">
 
-        <div style="
-          background:#f8fbff;
-          border:1px solid #dcebf7;
-          border-radius:18px;
-          padding:20px;
-        ">
+                <div style="
+                    margin-bottom:16px;
+                ">
+                    <b>Tanggal Kirim</b>
+                    <div style="margin-top:6px;">
+                        ${chat.tanggal || "-"}
+                    </div>
+                </div>
 
-          <div style="margin-bottom:16px;">
-            <b>Tanggal Kirim</b>
-            <div style="margin-top:6px;">
-              ${chat.tanggal || "-"}
+                <div style="
+                    margin-bottom:16px;
+                ">
+                    <b>Nama Customer</b>
+                    <div style="margin-top:6px;">
+                        ${chat.nama || "-"}
+                    </div>
+                </div>
+
+                <div style="
+                    margin-bottom:16px;
+                ">
+                    <b>No. HP</b>
+                    <div style="margin-top:6px;">
+                        ${chat.noHP || "-"}
+                    </div>
+                </div>
+
+                <div style="
+                    margin-bottom:16px;
+                ">
+                    <b>Jenis Produk</b>
+                    <div style="margin-top:6px;">
+                        ${chat.produk || "-"}
+                    </div>
+                </div>
+
+                <div style="
+                    margin-bottom:16px;
+                ">
+                    <b>Draft Chat</b>
+                    <div style="
+                        margin-top:6px;
+                        background:#eef7ff;
+                        border-radius:12px;
+                        padding:12px;
+                    ">
+                        ${chat.draft || "-"}
+                    </div>
+                </div>
+
+                <div style="
+                    color:${warnaStatus};
+                    font-weight:bold;
+                    font-size:14px;
+                    margin-bottom:12px;
+                ">
+                    ${iconStatus} ${teksStatus}
+                </div>
+
             </div>
-          </div>
+        `;
+    });
 
-          <div style="margin-bottom:16px;">
-            <b>Nama Customer</b>
-            <div style="margin-top:6px;">
-              ${chat.nama || "-"}
-            </div>
-          </div>
-
-          <div style="margin-bottom:16px;">
-            <b>No. HP</b>
-            <div style="margin-top:6px;">
-              ${chat.noHP || "-"}
-            </div>
-          </div>
-
-          <div style="margin-bottom:16px;">
-            <b>Jenis Produk</b>
-            <div style="margin-top:6px;">
-              ${chat.produk || "-"}
-            </div>
-          </div>
-
+    html += `
         </div>
+    `;
+
+    reportPage.innerHTML = html;
+
+    reportPage.style.display = "block";
+}
 </script>
 
         <div class="menu-card" onclick="window.location.href='followup.html'">
