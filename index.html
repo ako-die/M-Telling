@@ -311,6 +311,7 @@
             <p>Lihat respons dan hasil penawaran</p>
           </div>    
 </div>
+        <script>
 function bukaReportChat() {
 
   const data = localStorage.getItem("mTellingChatPenawaran");
@@ -413,65 +414,8 @@ function bukaReportChat() {
             </div>
           </div>
 
-          <div style="margin-bottom:16px;">
-            <b>Draft Chat</b>
-            <div style="
-              margin-top:8px;
-              background:#eef6fc;
-              padding:14px;
-              border-radius:12px;
-            ">
-              ${chat.draft || "-"}
-            </div>
-          </div>
-
-          <div style="
-            margin-top:20px;
-            font-weight:bold;
-            color:${
-              chat.status === "Chat Gagal"
-              ? "#c62828"
-              : "#18864b"
-            };
-          ">
-            ${
-              chat.status === "Chat Gagal"
-              ? "🔴"
-              : "🟢"
-            }
-            ${chat.status || "Belum ada status"}
-          </div>
-
         </div>
-
-      </div>
-    `;
-
-    document.body.appendChild(reportPage);
-
-  } else {
-
-    reportPage.style.display = "block";
-  }
-}
-
-
-// ================= KEMBALI DARI REPORT =================
-
-function kembaliDariReport() {
-
-  const reportPage =
-    document.getElementById("reportChatPage");
-
-  if (reportPage) {
-    reportPage.style.display = "none";
-  }
-
-  document.getElementById("home").style.display = "block";
-}
-            
-        </div>
-
+</script>
 
         <div class="menu-card" onclick="window.location.href='followup.html'">
           <div class="menu-icon">🔄</div>
@@ -1321,6 +1265,3 @@ function kembaliDariReport() {
 </script>
 </body>
 </html>
-
-   
-     
