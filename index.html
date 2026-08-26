@@ -1060,7 +1060,7 @@ if (nomor.startsWith("0")) {
 }
 // ================= TANDAI CHAT GAGAL =================
 
-function tandaiChatGagal() {
+function tandaiChatGagal(index) {
 
   const data = localStorage.getItem("mTellingChatPenawaran");
 
@@ -1069,19 +1069,29 @@ function tandaiChatGagal() {
     return;
   }
 
-  const chat = JSON.parse(data);
+  let daftarChat = JSON.parse(data);
 
-  chat.status = "Chat Gagal";
+  if (!Array.isArray(daftarChat)) {
+    daftarChat = [daftarChat];
+  }
+
+  if (!daftarChat[index]) {
+    alert("Data chat tidak ditemukan.");
+    return;
+  }
+
+  daftarChat[index].status = "Chat Gagal";
 
   localStorage.setItem(
     "mTellingChatPenawaran",
-    JSON.stringify(chat)
+    JSON.stringify(daftarChat)
   );
 
-  alert("🔴 Status chat diubah menjadi Chat Gagal.");
+  alert("🔴 Status chat berhasil diubah menjadi Chat Gagal.");
 
   tampilkanStatusChat();
 }
+
   // ================= KIRIM ULANG CHAT =================
 
 function kirimUlangChat() {
