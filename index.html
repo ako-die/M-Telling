@@ -885,68 +885,7 @@ if (nomor.startsWith("0")) {
           margin-bottom:18px;
         ">
           ${chat.draft || "Tidak ada draft chat"}
-        </div>
-
-
-        <div style="
-          display:flex;
-          align-items:center;
-          justify-content:space-between;
-          gap:10px;
-        ">
-
-          <div>
-
-  <div style="
-    color:${warnaStatus};
-    font-weight:bold;
-    font-size:14px;
-    margin-bottom:12px;
-  ">
-    ${iconStatus} ${chat.status}
-  </div>
-
-  ${
-    chat.status === "Chat Gagal"
-    ? `
-      <button onclick="kirimUlangChat()" style="
-        width:100%;
-        border:none;
-        background:#1976d2;
-        color:white;
-        padding:12px;
-        border-radius:12px;
-        font-weight:bold;
-        font-size:14px;
-      ">
-        🔄 KIRIM ULANG
-      </button>
-    `
-    : `
-      <button onclick="tandaiChatGagal()" style="
-        width:100%;
-        border:none;
-        background:#ffebee;
-        color:#c62828;
-        padding:10px;
-        border-radius:12px;
-        font-weight:bold;
-        font-size:13px;
-      ">
-        ⚠️ Tandai Chat Gagal
-      </button>
-    `
-  }
-
-</div>
-
-        </div>
-
-      </div>
-
-    `;
-
-  }
+tapi
 // ================= TANDAI CHAT GAGAL =================
 
 function tandaiChatGagal() {
