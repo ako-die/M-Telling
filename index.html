@@ -693,10 +693,26 @@ function bukaReportChat() {
       status: "Draft"
     };
 
-    localStorage.setItem(
-      "mTellingChatPenawaran",
-      JSON.stringify(dataChat)
-    );
+    const dataLama = localStorage.getItem("mTellingChatPenawaran");
+
+let daftarChat = [];
+
+if (dataLama) {
+    const dataParsed = JSON.parse(dataLama);
+
+    if (Array.isArray(dataParsed)) {
+        daftarChat = dataParsed;
+    } else {
+        daftarChat = [dataParsed];
+    }
+}
+
+daftarChat.push(dataChat);
+
+localStorage.setItem(
+    "mTellingChatPenawaran",
+    JSON.stringify(daftarChat)
+);
 
     alert("✅ Data Chat Penawaran berhasil disimpan.");
   };
