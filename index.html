@@ -506,7 +506,7 @@
 
       </div>
 
-      <button style="
+<button onclick="hapusSemuaChat()" style="
         width:100%;
         padding:13px;
         border:none;
@@ -1432,6 +1432,19 @@ function kembaliDariReport() {
   }
 
   document.getElementById("home").style.display = "block";
+}
+  function hapusSemuaChat() {
+
+    if (!confirm("Hapus semua data chat penawaran?")) {
+        return;
+    }
+
+    localStorage.removeItem("mTellingChatPenawaranList");
+    localStorage.removeItem("mTellingChatPenawaran");
+
+    alert("🗑️ Semua data chat berhasil dihapus.");
+
+    location.reload();
 }
 </script>
 </body>
