@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -231,128 +231,131 @@
 
 
       let chat;
+    let daftarChat;
 
-      try {
+    try {
+        daftarChat = JSON.parse(data);
 
-        chat = JSON.parse(data);
+        if (!Array.isArray(daftarChat)) {
+            daftarChat = [daftarChat];
+        }
 
-      } catch (error) {
+    } catch (error) {
 
         container.innerHTML = `
-          <div class="empty">
+            <div class="empty">
 
-            <div class="empty-icon">⚠️</div>
+                <div class="empty-icon">⚠️</div>
 
-            <h3>Data tidak dapat dibaca</h3>
+                <h3>Data tidak dapat dibaca</h3>
 
-            <p style="margin-top:10px;">
-              Silakan periksa kembali data Chat Penawaran.
-            </p>
+                <p style="margin-top:10px;">
+                    Silakan periksa kembali data Chat Penawaran.
+                </p>
 
-          </div>
+            </div>
         `;
 
         return;
-      }
+    }
+
+    container.innerHTML = "";
+
+    daftarChat.forEach((chat, index) => {
+
+        container.innerHTML += `
+            <div class="followup-card">
+
+                <div class="customer-name">
+                    ${chat.nama || "-"}
+                </div>
+
+                <div class="info">
+
+                    <div class="info-row">
+
+                        <div class="label">
+                            Tanggal Kirim
+                        </div>
+
+                        <div class="value">
+                            ${chat.tanggal || "-"}
+                        </div>
+
+                    </div>
 
 
-      container.innerHTML = `
+                    <div class="info-row">
 
-        <div class="followup-card">
+                        <div class="label">
+                            No. HP
+                        </div>
 
-          <div class="customer-name">
-            ${chat.nama || "-"}
-          </div>
+                        <div class="value">
+                            ${chat.noHP || "-"}
+                        </div>
+
+                    </div>
 
 
-          <div class="info">
+                    <div class="info-row">
 
-            <div class="info-row">
+                        <div class="label">
+                            Jenis Produk
+                        </div>
 
-              <div class="label">
-                Tanggal Kirim
-              </div>
+                        <div class="value">
+                            ${chat.produk || "-"}
+                        </div>
 
-              <div class="value">
-                ${chat.tanggal || "-"}
-              </div>
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <div class="label">
+                            Draft Chat
+                        </div>
+
+                        <div class="draft">
+                            ${chat.draft || "-"}
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="statusFollowUp${index}"
+                        class="status"
+                    >
+                        ⏳ Menunggu Follow Up
+                    </div>
+
+
+                    <div class="action-row">
+
+                        <button
+                            class="action-btn follow-btn"
+                            onclick="followUpSekarang(${index})"
+                        >
+                            📱 Follow Up
+                        </button>
+
+                        <button
+                            class="action-btn done-btn"
+                            onclick="selesaikanFollowUp(${index})"
+                        >
+                            ✓ Selesai
+                        </button>
+
+                    </div>
+
+                </div>
 
             </div>
+        `;
 
-
-            <div class="info-row">
-
-              <div class="label">
-                No. HP
-              </div>
-
-              <div class="value">
-                ${chat.noHP || "-"}
-              </div>
-
-            </div>
-
-
-            <div class="info-row">
-
-              <div class="label">
-                Jenis Produk
-              </div>
-
-              <div class="value">
-                ${chat.produk || "-"}
-              </div>
-
-            </div>
-
-
-            <div class="info-row">
-
-              <div class="label">
-                Draft Chat
-              </div>
-
-              <div class="draft">
-                ${chat.draft || "-"}
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div
-            id="statusFollowUp"
-            class="status"
-          >
-            ⏳ Menunggu Follow Up
-          </div>
-
-
-          <div class="action-row">
-
-            <button
-              class="action-btn follow-btn"
-              onclick="followUpSekarang()"
-            >
-              📱 Follow Up
-            </button>
-
-            <button
-              class="action-btn done-btn"
-              onclick="selesaikanFollowUp()"
-            >
-              ✓ Selesai
-            </button>
-
-          </div>
-
-        </div>
-
-      `;
-
-      tampilkanStatus();
-
+    });
     }
 
 
