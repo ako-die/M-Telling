@@ -760,6 +760,18 @@ if (nomor.startsWith("0")) {
     window.open(whatsappURL, "_blank");
 
   };
+    function hapusSemuaChat() {
+
+    const yakin = confirm("Apakah Anda yakin ingin menghapus data Chat Penawaran?");
+
+    if (!yakin) {
+        return;
+    }
+
+    localStorage.removeItem("mTellingChatPenawaran");
+
+    alert("🗑️ Data Chat Penawaran berhasil dihapus.");
+}
 </script>
   <!-- ================= STATUS CHAT ================= -->
 
