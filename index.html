@@ -589,10 +589,22 @@
       status: "Draft"
     };
 
-    localStorage.setItem(
-      "mTellingChatPenawaran",
-      JSON.stringify(dataChat)
-    );
+    let daftarChat = JSON.parse(
+    localStorage.getItem("mTellingChatPenawaranList") || "[]"
+);
+
+daftarChat.push(dataChat);
+
+localStorage.setItem(
+    "mTellingChatPenawaranList",
+    JSON.stringify(daftarChat)
+);
+
+// Tetap simpan data terakhir untuk kompatibilitas fitur lama
+localStorage.setItem(
+    "mTellingChatPenawaran",
+    JSON.stringify(dataChat)
+);
 
     alert("✅ Data Chat Penawaran berhasil disimpan.");
   };
