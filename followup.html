@@ -409,16 +409,21 @@ function followUpSekarang(index) {
         "#Intent;scheme=whatsapp;package=com.whatsapp;end";
 }
 
-    function selesaikanFollowUp() {
+    function selesaikanFollowUp(index) {
 
-      localStorage.setItem(
-        "mTellingFollowUpStatus",
+    const status = document.getElementById(`statusFollowUp${index}`);
+
+    if (!status) return;
+
+    status.className = "status selesai";
+
+    status.innerHTML = "🟢 Follow Up Selesai";
+
+    localStorage.setItem(
+        `mTellingFollowUpStatus_${index}`,
         "Selesai"
-      );
-
-      tampilkanStatus();
-
-    }
+    );
+}
 
 
     function tampilkanStatus() {
