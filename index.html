@@ -250,17 +250,27 @@
     <div class="created">
       Created by Dee
     </div>
-
-    <div class="splash-content">
-
-      <div class="logo">
-    <img src="icon-512.png" alt="M-Telling">
-</div>
-<div class="loading"></div>
-      
+<button onclick="mulaiAplikasi()" style="
+    margin-top:25px;
+    padding:14px 35px;
+    border:none;
+    border-radius:14px;
+    background:#0d47a1;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+">
+    🚀 MULAI
+</button>
 
   </section>
-
+<script>
+function mulaiAplikasi() {
+    document.getElementById("splash").style.display = "none";
+    document.getElementById("home").style.display = "block";
+}
+</script>
 
   <!-- ================= HOME ================= -->
 
@@ -526,16 +536,7 @@ function bukaReportChat() {
 
   <!-- ================= PERPINDAHAN SPLASH KE HOME ================= -->
 
-  <script>
-
-    setTimeout(function() {
-
-      document.getElementById("splash").style.display = "none";
-      document.getElementById("home").style.display = "block";
-
-    }, 3000);
-
-  </script>
+ 
 <!-- ================= CHAT PENAWARAN ================= -->
 
 <div id="chatPenawaranPage" style="
