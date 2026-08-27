@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Monitoring - M-Telling</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    #0d47a1 0%,
+    #1976d2 28%,
+    #eef7ff 70%,
+    #ffffff 100%
+  );
+  color: #12345a;
+}
+
+.page {
+  width: 100%;
+  max-width: 430px;
+  margin: auto;
+  padding: 25px 20px 40px;
+}
+
+.created {
+  text-align: center;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.container {
+  background: white;
+  border-radius: 28px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+}
+
+.back {
+  border: none;
+  background: #e8f3ff;
+  color: #0d47a1;
+  padding: 11px 18px;
+  border-radius: 13px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #0d47a1;
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #71859a;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: #f8fbff;
+  border: 1px solid #dcebf7;
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.customer-name {
+  color: #0d47a1;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+
+.label {
+  color: #71859a;
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 12px;
+  margin-bottom: 5px;
+}
+
+.value {
+  font-size: 15px;
+  color: #12345a;
+}
+
+select,
+textarea {
+  width: 100%;
+  border: 1px solid #cfe3f7;
+  border-radius: 12px;
+  padding: 12px;
+  background: white;
+  color: #12345a;
+  font-size: 14px;
+}
+
+textarea {
+  height: 90px;
+  resize: vertical;
+}
+
+.status-diproses {
+  background: #fff4d6;
+}
+
+.status-disetujui {
+  background: #e2f7e9;
+}
+
+.status-ditolak {
+  background: #ffe7e7;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+button.action {
+  flex: 1;
+  border: none;
+  padding: 11px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.save {
+  background: #1976d2;
+  color: white;
+}
+
+.share {
+  background: #e5f2ff;
+  color: #0d47a1;
+}
+
+.delete {
+  background: #ffe8e8;
+  color: #c62828;
+}
+
+.print-all {
+  width: 100%;
+  border: none;
+  padding: 13px;
+  border-radius: 13px;
+  background: #0d47a1;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.empty {
+  text-align: center;
+  padding: 35px 15px;
+  color: #71859a;
+}
+
+.footer {
+  text-align: center;
+  color: #6f8aa5;
+  font-size: 11px;
+  margin-top: 25px;
+}
+
+@media print {
+
+  body {
+    background: white;
+  }
+
+  .created,
+  .back,
+  .print-all,
+  .buttons,
+  .footer,
+  select,
+  textarea {
+    display: none !important;
+  }
+
+  .page {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .container {
+    box-shadow: none;
+    padding: 10px;
+  }
+
+  .card {
+    break-inside: avoid;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <div class="created">
+    Created by Dee
+  </div>
+
+  <div class="container">
+
+    <button class="back" onclick="kembaliHome()">
+      ← Kembali
+    </button>
+
+    <h1>Monitoring</h1>
+
+    <div class="subtitle">
+      Pantau hasil follow up customer
+    </div>
+
+    <button class="print-all" onclick="window.print()">
+      🖨️ Cetak Laporan
+    </button>
+
+    <div id="monitoringList"></div>
+
+  </div>
+
+  <div class="footer">
+    M-Telling • Smart Customer Engagement
+  </div>
+
+</div>
+
+
+<script>
+
+const CHAT_KEY = "mTellingChatPenawaran";
+const MONITORING_KEY = "mTellingMonitoring";
+
+
+function ambilChat() {
+
+  const data = localStorage.getItem(CHAT_KEY);
+
+  if (!data) {
+    return [];
+  }
+
+  try {
+
+    let hasil = JSON.parse(data);
+
+    if (!Array.isArray(hasil)) {
+      hasil = [hasil];
+    }
+
+    return hasil;
+
+  } catch (error) {
+
+    return [];
+
+  }
+}
+
+
+function ambilMonitoring() {
+
+  const data = localStorage.getItem(MONITORING_KEY);
+
+  if (!data) {
+    return [];
+  }
+
+  try {
+
+    const hasil = JSON.parse(data);
+
+    return Array.isArray(hasil) ? hasil : [];
+
+  } catch (error) {
+
+    return [];
+
+  }
+}
+
+
+function simpanMonitoring(data) {
+
+  localStorage.setItem(
+    MONITORING_KEY,
+    JSON.stringify(data)
+  );
+
+}
+
+
+function tampilkanMonitoring() {
+
+  const chats = ambilChat();
+
+  const list = document.getElementById("monitoringList");
+
+  list.innerHTML = "";
+
+  if (chats.length === 0) {
+
+    list.innerHTML = `
+      <div class="empty">
+        📋<br><br>
+        Belum ada data customer untuk dimonitor.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  let monitoring = ambilMonitoring();
+
+
+  chats.forEach((chat, index) => {
+
+    if (!monitoring[index]) {
+
+      monitoring[index] = {
+        hasil: "Diproses",
+        catatan: ""
+      };
+
+    }
+
+
+    const dataMonitoring = monitoring[index];
+
+    let statusClass = "status-diproses";
+
+    if (dataMonitoring.hasil === "Disetujui") {
+      statusClass = "status-disetujui";
+    }
+
+    if (dataMonitoring.hasil === "Ditolak") {
+      statusClass = "status-ditolak";
+    }
+
+
+    const card = document.createElement("div");
+
+    card.className = "card " + statusClass;
+
+
+    card.innerHTML = `
+
+      <div class="customer-name">
+        ${escapeHTML(chat.nama || "-")}
+      </div>
+
+
+      <div class="label">
+        Tanggal Kirim
+      </div>
+
+      <div class="value">
+        ${escapeHTML(chat.tanggal || "-")}
+      </div>
+
+
+      <div class="label">
+        Jenis Produk
+      </div>
+
+      <div class="value">
+        ${escapeHTML(chat.produk || "-")}
+      </div>
+
+
+      <div class="label">
+        Hasil Follow Up
+      </div>
+
+      <select id="hasil-${index}">
+
+        <option value="Diproses"
+          ${dataMonitoring.hasil === "Diproses" ? "selected" : ""}>
+          🟡 Diproses
+        </option>
+
+        <option value="Disetujui"
+          ${dataMonitoring.hasil === "Disetujui" ? "selected" : ""}>
+          🟢 Disetujui
+        </option>
+
+        <option value="Ditolak"
+          ${dataMonitoring.hasil === "Ditolak" ? "selected" : ""}>
+          🔴 Ditolak
+        </option>
+
+      </select>
+
+
+      <div class="label">
+        Catatan
+      </div>
+
+      <textarea
+        id="catatan-${index}"
+        placeholder="Tulis catatan follow up..."
+      >${escapeHTML(dataMonitoring.catatan || "")}</textarea>
+
+
+      <div class="buttons">
+
+        <button
+          class="action save"
+          onclick="simpanData(${index})">
+          💾 Simpan
+        </button>
+
+        <button
+          class="action share"
+          onclick="shareData(${index})">
+          📤 Share
+        </button>
+
+        <button
+          class="action delete"
+          onclick="hapusData(${index})">
+          🗑️ Delete
+        </button>
+
+      </div>
+
+    `;
+
+
+    list.appendChild(card);
+
+  });
+
+
+  simpanMonitoring(monitoring);
+
+}
+
+
+function simpanData(index) {
+
+  const monitoring = ambilMonitoring();
+
+  const hasil =
+    document.getElementById("hasil-" + index).value;
+
+  const catatan =
+    document.getElementById("catatan-" + index).value;
+
+
+  monitoring[index] = {
+    hasil: hasil,
+    catatan: catatan
+  };
+
+
+  simpanMonitoring(monitoring);
+
+  alert("✅ Data Monitoring berhasil disimpan.");
+
+  tampilkanMonitoring();
+
+}
+
+
+function hapusData(index) {
+
+  const yakin = confirm(
+    "Apakah Anda yakin ingin menghapus data Monitoring customer ini?"
+  );
+
+  if (!yakin) {
+    return;
+  }
+
+
+  const monitoring = ambilMonitoring();
+
+  monitoring.splice(index, 1);
+
+  simpanMonitoring(monitoring);
+
+
+  const chats = ambilChat();
+
+  chats.splice(index, 1);
+
+  localStorage.setItem(
+    CHAT_KEY,
+    JSON.stringify(chats)
+  );
+
+
+  alert("🗑️ Data Monitoring berhasil dihapus.");
+
+  tampilkanMonitoring();
+
+}
+
+
+function shareData(index) {
+
+  const chats = ambilChat();
+  const monitoring = ambilMonitoring();
+
+  const chat = chats[index];
+  const data = monitoring[index] || {};
+
+
+  const teks =
+
+`M-Telling - Monitoring
+
+Nama Customer : ${chat.nama || "-"}
+Tanggal Kirim : ${chat.tanggal || "-"}
+Jenis Produk  : ${chat.produk || "-"}
+Hasil Follow Up : ${data.hasil || "Diproses"}
+
+Catatan:
+${data.catatan || "-"}`;
+
+
+  if (navigator.share) {
+
+    navigator.share({
+      title: "Monitoring M-Telling",
+      text: teks
+    });
+
+  } else {
+
+    navigator.clipboard.writeText(teks);
+
+    alert(
+      "📋 Laporan berhasil disalin. Silakan paste untuk dibagikan."
+    );
+
+  }
+
+}
+
+
+function kembaliHome() {
+
+  window.location.href = "index.html";
+
+}
+
+
+function escapeHTML(text) {
+
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+tampilkanMonitoring();
+
+</script>
+
+</body>
+</html>
