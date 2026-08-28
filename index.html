@@ -774,7 +774,7 @@ function bukaReportChat() {
   const noHP = chatPage.querySelectorAll('input[type="tel"]')[0];
   const jenisProduk = chatPage.querySelector("select");
   const draftChat = chatPage.querySelector("textarea");
-
+const filePenawaran = document.getElementById("filePenawaran");
   const tombolSave = chatPage.querySelectorAll("button")[1];
 
   tombolSave.onclick = function () {
@@ -800,7 +800,8 @@ function bukaReportChat() {
       noHP: noHP.value,
       produk: jenisProduk.value,
       draft: draftChat.value,
-      status: "Draft"
+      lampiran: filePenawaran.files.length > 0 ? filePenawaran.files[0].name : "",
+      status: "Draft"  
     };
 
     const dataLama = localStorage.getItem("mTellingChatPenawaran");
@@ -860,7 +861,9 @@ localStorage.setItem(
     noHP: noHP.value,
     produk: jenisProduk.value,
     draft: draftChat.value,
+      lampiran: filePenawaran.files.length > 0 ? filePenawaran.files[0].name : "",
     status: "Chat Terkirim"
+      
 };
 
 const dataLama = localStorage.getItem("mTellingChatPenawaran");
@@ -892,15 +895,37 @@ if (nomor.startsWith("0")) {
 } else if (!nomor.startsWith("62")) {
   nomor = "62" + nomor;
 }
-    const pesan = encodeURIComponent(draftChat.value);
+const pesan = draftChat.value;
+
+const file = filePenawaran.files[0];
+
+if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+
+    try {
+        await navigator.share({
+            title: "Chat Penawaran",
+            text: pesan,
+            files: [file]
+        });
+
+        alert("✅ Draft Chat dan file siap dibagikan.");
+
+    } catch (error) {
+        if (error.name !== "AbortError") {
+            alert("❌ File gagal dibagikan.");
+        }
+    }
+
+} else {
+
+    const pesanEncoded = encodeURIComponent(pesan);
 
     const whatsappURL =
-    "whatsapp://send?phone=" + nomor + "&text=" + pesan;
-
-    alert("📤 Chat siap dikirim melalui WhatsApp.");
+        "https://wa.me/" + nomor + "?text=" + pesanEncoded;
 
     window.open(whatsappURL, "_blank");
-
+}
+    
   };
     function hapusSemuaChat() {
 
