@@ -833,7 +833,7 @@ localStorage.setItem(
 
   const tombolSend = chatPage.querySelectorAll("button")[2];
 
-  tombolSend.onclick = function () {
+  tombolSend.onclick = async function () {
 
     if (namaCustomer.value.trim() === "") {
       alert("Nama Customer harus diisi.");
